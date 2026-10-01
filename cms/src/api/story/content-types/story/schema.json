@@ -9,6 +9,7 @@
     "slug": { "type": "uid", "targetField": "title", "required": true },
     "excerpt": { "type": "text", "required": true },
     "topic": { "type": "enumeration", "enum": ["True Crime", "Organized Crime", "War Crime", "Unsolved Crime", "Historical Crime"], "required": true },
+    "topicRef": { "type": "relation", "relation": "manyToOne", "target": "api::topic.topic", "inversedBy": "stories" },
     "secondaryTopic": { "type": "string" },
     "author": { "type": "string", "required": true },
     "publicationDate": { "type": "date" },

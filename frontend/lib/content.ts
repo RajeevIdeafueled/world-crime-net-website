@@ -6,12 +6,32 @@ export type Story = {
   slug: string;
   excerpt: string;
   topic: string;
+  topicSlug: string;
   secondaryTopic?: string;
   author: string;
   publishedAt: string;
   readTime: string;
   image: string;
   featured?: boolean;
+  body?: StoryBlock[];
+};
+
+export type StoryBlock = {
+  type: string;
+  level?: number;
+  format?: string;
+  text?: string;
+  bold?: boolean;
+  italic?: boolean;
+  url?: string;
+  children?: StoryBlock[];
+};
+
+export type Topic = {
+  id: number | string;
+  name: string;
+  slug: string;
+  description?: string;
 };
 
 export const fallbackStories: Story[] = [
@@ -22,6 +42,7 @@ export const fallbackStories: Story[] = [
     excerpt:
       "A coastal town, missing detective's files, and a cold-case unit reopening an investigation everyone was told to forget.",
     topic: 'True Crime',
+    topicSlug: 'true-crime',
     secondaryTopic: 'Unsolved',
     author: 'Mara Bennett',
     publishedAt: 'Sep 18, 2026',
@@ -37,6 +58,7 @@ export const fallbackStories: Story[] = [
     excerpt:
       'A paper trail across three jurisdictions reveals how shell companies hid a sprawling criminal network.',
     topic: 'Organized Crime',
+    topicSlug: 'organized-crime',
     author: 'Jon Hale',
     publishedAt: 'Sep 12, 2026',
     readTime: '12 min read',
@@ -50,6 +72,7 @@ export const fallbackStories: Story[] = [
     excerpt:
       'Documents preserved for decades became the missing link in a cross-border investigation.',
     topic: 'War Crime',
+    topicSlug: 'war-crime',
     author: 'Nadia Cole',
     publishedAt: 'Sep 6, 2026',
     readTime: '15 min read',
@@ -63,6 +86,7 @@ export const fallbackStories: Story[] = [
     excerpt:
       'Twenty years later, one disappearance still shapes a city and the families who refused to stop asking questions.',
     topic: 'Unsolved Crime',
+    topicSlug: 'unsolved-crime',
     author: 'Elena Park',
     publishedAt: 'Aug 30, 2026',
     readTime: '10 min read',
@@ -71,10 +95,26 @@ export const fallbackStories: Story[] = [
   },
 ];
 
+export const fallbackTopics: Topic[] = [
+  { id: 'true-crime', name: 'True Crime', slug: 'true-crime' },
+  { id: 'organized-crime', name: 'Organized Crime', slug: 'organized-crime' },
+  { id: 'war-crime', name: 'War Crime', slug: 'war-crime' },
+  { id: 'unsolved-crime', name: 'Unsolved Crime', slug: 'unsolved-crime' },
+  { id: 'historical-crime', name: 'Historical Crime', slug: 'historical-crime' },
+];
+
 const STRAPI =
   process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+
+function slugifyTopic(name: string) {
+  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function apiHeaders(): Record<string, string> {
+  return STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {};
+}
 
 
 /**
@@ -82,6 +122,7 @@ const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
  */
 function mapStory(item: any): Story {
   const a = item.attributes ?? item;
+  const topicRelation = a.topicRef?.data?.attributes ?? a.topicRef?.data ?? a.topicRef;
 
   const imageUrl =
     a.heroImage?.url ||
@@ -98,7 +139,8 @@ function mapStory(item: any): Story {
     title: a.title,
     slug: a.slug,
     excerpt: a.excerpt,
-    topic: a.topic,
+    topic: topicRelation?.name || a.topic,
+    topicSlug: topicRelation?.slug || slugifyTopic(a.topic || ''),
     secondaryTopic: a.secondaryTopic,
     author: a.author,
 
@@ -113,6 +155,7 @@ function mapStory(item: any): Story {
     readTime: a.readTime || '',
     image,
     featured: a.featured,
+    body: Array.isArray(a.body) ? a.body : [],
   };
 }
 
@@ -127,6 +170,7 @@ export async function getStories(): Promise<Story[]> {
     const res = await fetch(
       `${STRAPI}/api/stories?populate=*&sort=publicationDate:desc&status=published`,
       {
+        headers: apiHeaders(),
         next: {
           revalidate: 60,
         },
@@ -154,6 +198,68 @@ export async function getStories(): Promise<Story[]> {
     console.error('Strapi stories error:', error);
 
     return fallbackStories;
+  }
+}
+
+export async function getTopics(): Promise<Topic[]> {
+  try {
+    const res = await fetch(`${STRAPI}/api/topics?sort=name:asc`, {
+      headers: apiHeaders(),
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+      console.error('Strapi topics request failed:', res.status, await res.text());
+      return fallbackTopics;
+    }
+
+    const json = await res.json();
+    if (!json?.data?.length) return fallbackTopics;
+
+    return json.data.map((item: any) => {
+      const data = item.attributes ?? item;
+      return {
+        id: item.id ?? item.documentId,
+        name: data.name,
+        slug: data.slug,
+        description: data.description || '',
+      };
+    });
+  } catch (error) {
+    console.error('Strapi topics error:', error);
+    return fallbackTopics;
+  }
+}
+
+export async function getTopicBySlug(slug: string): Promise<Topic | null> {
+  const topics = await getTopics();
+  return topics.find((topic) => topic.slug === slug) ?? null;
+}
+
+export async function getStoriesByTopic(slug: string, topicName: string): Promise<Story[]> {
+  try {
+    const params = new URLSearchParams({
+      populate: '*',
+      sort: 'publicationDate:desc',
+      status: 'published',
+      'filters[$or][0][topicRef][slug][$eq]': slug,
+      'filters[$or][1][topic][$eq]': topicName,
+    });
+    const res = await fetch(`${STRAPI}/api/stories?${params}`, {
+      headers: apiHeaders(),
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+      console.error('Strapi topic stories request failed:', res.status, await res.text());
+      return fallbackStories.filter((story) => story.topicSlug === slug);
+    }
+
+    const json = await res.json();
+    return json?.data?.length ? json.data.map(mapStory) : [];
+  } catch (error) {
+    console.error('Strapi topic stories error:', error);
+    return fallbackStories.filter((story) => story.topicSlug === slug);
   }
 }
 

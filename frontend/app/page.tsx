@@ -3,13 +3,11 @@ import Footer from '@/components/Footer';
 import StoryCard from '@/components/StoryCard';
 import Newsletter from '@/components/Newsletter';
 import AdSlot from '@/components/AdSlot';
-import { getStories } from '@/lib/content';
+import { getStories, getTopics } from '@/lib/content';
 import Link from 'next/link';
 
-const topics = ['True Crime', 'Organized Crime', 'War Crime', 'Unsolved Crime', 'Historical Crime'];
-
 export default async function Home() {
-  const stories = await getStories();
+  const [stories, topics] = await Promise.all([getStories(), getTopics()]);
   const featured = stories.find((s) => s.featured) || stories[0];
   return (
     <main>
@@ -30,7 +28,7 @@ export default async function Home() {
 
       <section className="topics" id="topics">
         <div className="topics-intro"><div><span className="eyebrow accent">Explore by topic</span><h2>Stories that follow the evidence.</h2></div><p>Browse World Crime Net by the subjects that define our reporting — from individual cases to systems of power.</p></div>
-        <div className="topic-list">{topics.map((topic, i)=><a key={topic} href="#editors"><span>0{i+1}</span><strong>{topic}</strong><span>↗</span></a>)}</div>
+        <div className="topic-list">{topics.map((topic, i)=><Link key={topic.slug} href={`/topics/${topic.slug}`}><span>0{i+1}</span><strong>{topic.name}</strong><span>↗</span></Link>)}</div>
       </section>
 
       <AdSlot />
