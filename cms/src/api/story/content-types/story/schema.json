@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stories",
+  "info": { "singularName": "story", "pluralName": "stories", "displayName": "Story", "description": "World Crime Net editorial story" },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "excerpt": { "type": "text", "required": true },
+    "topic": { "type": "enumeration", "enum": ["True Crime", "Organized Crime", "War Crime", "Unsolved Crime", "Historical Crime"], "required": true },
+    "secondaryTopic": { "type": "string" },
+    "author": { "type": "string", "required": true },
+    "publicationDate": { "type": "date" },
+    "readTime": { "type": "string" },
+    "featured": { "type": "boolean", "default": false },
+    "heroImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "body": { "type": "blocks" },
+    "chapters": { "type": "json" }
+  }
+}
