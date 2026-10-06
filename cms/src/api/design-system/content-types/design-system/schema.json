@@ -1,0 +1,247 @@
+{
+  "kind": "singleType",
+  "collectionName": "design_systems",
+  "info": {
+    "singularName": "design-system",
+    "pluralName": "design-systems",
+    "displayName": "Design System",
+    "description": "Centralized typography and color controls for the editorial brand"
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "default": "World Crime Net Design System"
+    },
+    "fontPrimary": {
+      "type": "string",
+      "default": "Inter, Arial, sans-serif"
+    },
+    "fontPrimaryFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "fontAccent": {
+      "type": "string",
+      "default": "Bebas Neue, Impact, sans-serif"
+    },
+    "fontAccentFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "fontPrimarySource": {
+      "type": "enumeration",
+      "enum": ["upload", "google"],
+      "default": "upload"
+    },
+    "fontPrimaryGoogleFamily": {
+      "type": "string",
+      "default": "Inter"
+    },
+    "fontPrimaryGoogleUrl": {
+      "type": "string",
+      "default": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    },
+    "fontAccentSource": {
+      "type": "enumeration",
+      "enum": ["upload", "google"],
+      "default": "upload"
+    },
+    "fontAccentGoogleFamily": {
+      "type": "string",
+      "default": "Bebas Neue"
+    },
+    "fontAccentGoogleUrl": {
+      "type": "string",
+      "default": "https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+    },
+    "logoSource": {
+      "type": "enumeration",
+      "enum": ["upload", "google"],
+      "default": "upload"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "logoGoogleUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#090909"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#f5f5f0"
+    },
+    "mutedColor": {
+      "type": "string",
+      "default": "#b3b1aa"
+    },
+    "accentColor": {
+      "type": "string",
+      "default": "#f6543f"
+    },
+    "linkColor": {
+      "type": "string",
+      "default": "#f6543f"
+    },
+    "quoteColor": {
+      "type": "string",
+      "default": "#e7d3c0"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "rgba(255,255,255,0.2)"
+    },
+    "calloutBackground": {
+      "type": "string",
+      "default": "#171414"
+    },
+    "colorTokens": {
+      "type": "json",
+      "default": {
+        "background": "#090909",
+        "text": "#f5f5f0",
+        "muted": "#b3b1aa",
+        "accent": "#f6543f",
+        "link": "#f6543f",
+        "quote": "#e7d3c0",
+        "border": "rgba(255,255,255,0.2)",
+        "callout": "#171414"
+      }
+    },
+    "typographyPresets": {
+      "type": "json",
+      "default": {
+        "heading": {
+          "label": "Heading",
+          "fontFamily": "var(--font-bebas)",
+          "fontSize": "clamp(2.75rem, 7vw, 9rem)",
+          "fontWeight": 700,
+          "lineHeight": "0.9",
+          "letterSpacing": "0.02em",
+          "textTransform": "uppercase",
+          "color": "#f5f5f0",
+          "bold": true
+        },
+        "subheading": {
+          "label": "Subheading",
+          "fontFamily": "var(--font-bebas)",
+          "fontSize": "clamp(1.6rem, 2.3vw, 2.9rem)",
+          "fontWeight": 700,
+          "lineHeight": "1.1",
+          "letterSpacing": "0.06em",
+          "textTransform": "uppercase",
+          "color": "#f5f5f0",
+          "bold": true
+        },
+        "body": {
+          "label": "Body",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "1.08rem",
+          "fontWeight": 400,
+          "lineHeight": "1.8",
+          "letterSpacing": "0em",
+          "textTransform": "none",
+          "color": "#f5f5f0",
+          "bold": false,
+          "italic": false
+        },
+        "pullQuote": {
+          "label": "Pull Quote",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "clamp(1.7rem, 2vw, 2.4rem)",
+          "fontWeight": 500,
+          "lineHeight": "1.3",
+          "letterSpacing": "-0.03em",
+          "textTransform": "none",
+          "color": "#f5f5f0",
+          "italic": true
+        },
+        "blockquote": {
+          "label": "Block Quote",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "1.2rem",
+          "fontWeight": 500,
+          "lineHeight": "1.7",
+          "letterSpacing": "0.02em",
+          "textTransform": "none",
+          "color": "#e7d3c0",
+          "italic": true
+        },
+        "list": {
+          "label": "List",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "1.05rem",
+          "fontWeight": 400,
+          "lineHeight": "1.8",
+          "letterSpacing": "0em",
+          "textTransform": "none",
+          "color": "#f5f5f0"
+        },
+        "caption": {
+          "label": "Caption",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "0.8rem",
+          "fontWeight": 400,
+          "lineHeight": "1.5",
+          "letterSpacing": "0.06em",
+          "textTransform": "uppercase",
+          "color": "#b3b1aa"
+        },
+        "callout": {
+          "label": "Callout",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "1rem",
+          "fontWeight": 600,
+          "lineHeight": "1.7",
+          "letterSpacing": "0.02em",
+          "textTransform": "none",
+          "color": "#f5f5f0",
+          "backgroundColor": "#171414"
+        },
+        "link": {
+          "label": "Link",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "1rem",
+          "fontWeight": 600,
+          "lineHeight": "1.6",
+          "letterSpacing": "0em",
+          "textTransform": "none",
+          "color": "#f6543f",
+          "underline": true
+        },
+        "bold": {
+          "label": "Bold",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "inherit",
+          "fontWeight": 700,
+          "lineHeight": "inherit",
+          "letterSpacing": "0em",
+          "textTransform": "none",
+          "color": "#f5f5f0",
+          "bold": true
+        },
+        "italic": {
+          "label": "Italic",
+          "fontFamily": "var(--font-primary)",
+          "fontSize": "inherit",
+          "fontWeight": 400,
+          "lineHeight": "inherit",
+          "letterSpacing": "0em",
+          "textTransform": "none",
+          "color": "#f5f5f0",
+          "italic": true
+        }
+      }
+    }
+  }
+}

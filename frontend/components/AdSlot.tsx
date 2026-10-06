@@ -1,3 +1,5 @@
-export default function AdSlot() {
-  return <section className="ad-wrap"><div className="ad-slot"><div><span>Advertisement</span><small>Sponsored placement — clearly separated from editorial content</small></div><div className="ad-unit">300 × 100 ad unit</div></div></section>;
+import type { SiteContent } from '@/lib/content';
+
+export default function AdSlot({ site }: { site: SiteContent }) {
+  return <section className="ad-wrap"><div className="ad-slot"><div><span>{site.copy['advertisement.title']}</span><small>{site.copy['advertisement.description']}</small></div><div className="ad-unit">{site.copy['advertisement.dimensions']}</div></div></section>;
 }

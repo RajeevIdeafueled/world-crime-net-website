@@ -1,7 +1,7 @@
 {
   "kind": "collectionType",
   "collectionName": "stories",
-  "info": { "singularName": "story", "pluralName": "stories", "displayName": "Story", "description": "World Crime Net editorial story" },
+  "info": { "singularName": "story", "pluralName": "stories", "displayName": "Stories", "description": "Create and manage published investigations and documentary stories." },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
   "attributes": {

@@ -430,11 +430,295 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDesignSystemDesignSystem extends Struct.SingleTypeSchema {
+  collectionName: 'design_systems';
+  info: {
+    description: 'Centralized typography and color controls for the editorial brand';
+    displayName: 'Design System';
+    pluralName: 'design-systems';
+    singularName: 'design-system';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    accentColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#f6543f'>;
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#090909'>;
+    borderColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rgba(255,255,255,0.2)'>;
+    calloutBackground: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'#171414'>;
+    colorTokens: Schema.Attribute.JSON &
+      Schema.Attribute.DefaultTo<{
+        accent: '#f6543f';
+        background: '#090909';
+        border: 'rgba(255,255,255,0.2)';
+        callout: '#171414';
+        link: '#f6543f';
+        muted: '#b3b1aa';
+        quote: '#e7d3c0';
+        text: '#f5f5f0';
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fontAccent: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Bebas Neue, Impact, sans-serif'>;
+    fontAccentFile: Schema.Attribute.Media;
+    fontAccentGoogleFamily: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Bebas Neue'>;
+    fontAccentGoogleUrl: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'>;
+    fontAccentSource: Schema.Attribute.Enumeration<['upload', 'google']> &
+      Schema.Attribute.DefaultTo<'upload'>;
+    fontPrimary: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Inter, Arial, sans-serif'>;
+    fontPrimaryFile: Schema.Attribute.Media;
+    fontPrimaryGoogleFamily: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Inter'>;
+    fontPrimaryGoogleUrl: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'>;
+    fontPrimarySource: Schema.Attribute.Enumeration<['upload', 'google']> &
+      Schema.Attribute.DefaultTo<'upload'>;
+    linkColor: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#f6543f'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::design-system.design-system'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media;
+    logoGoogleUrl: Schema.Attribute.String & Schema.Attribute.DefaultTo<''>;
+    logoSource: Schema.Attribute.Enumeration<['upload', 'google']> &
+      Schema.Attribute.DefaultTo<'upload'>;
+    mutedColor: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#b3b1aa'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'World Crime Net Design System'>;
+    publishedAt: Schema.Attribute.DateTime;
+    quoteColor: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#e7d3c0'>;
+    textColor: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#f5f5f0'>;
+    typographyPresets: Schema.Attribute.JSON &
+      Schema.Attribute.DefaultTo<{
+        blockquote: {
+          color: '#e7d3c0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '1.2rem';
+          fontWeight: 500;
+          italic: true;
+          label: 'Block Quote';
+          letterSpacing: '0.02em';
+          lineHeight: '1.7';
+          textTransform: 'none';
+        };
+        body: {
+          bold: false;
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '1.08rem';
+          fontWeight: 400;
+          italic: false;
+          label: 'Body';
+          letterSpacing: '0em';
+          lineHeight: '1.8';
+          textTransform: 'none';
+        };
+        bold: {
+          bold: true;
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: 'inherit';
+          fontWeight: 700;
+          label: 'Bold';
+          letterSpacing: '0em';
+          lineHeight: 'inherit';
+          textTransform: 'none';
+        };
+        callout: {
+          backgroundColor: '#171414';
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '1rem';
+          fontWeight: 600;
+          label: 'Callout';
+          letterSpacing: '0.02em';
+          lineHeight: '1.7';
+          textTransform: 'none';
+        };
+        caption: {
+          color: '#b3b1aa';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '0.8rem';
+          fontWeight: 400;
+          label: 'Caption';
+          letterSpacing: '0.06em';
+          lineHeight: '1.5';
+          textTransform: 'uppercase';
+        };
+        heading: {
+          bold: true;
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-bebas)';
+          fontSize: 'clamp(2.75rem, 7vw, 9rem)';
+          fontWeight: 700;
+          label: 'Heading';
+          letterSpacing: '0.02em';
+          lineHeight: '0.9';
+          textTransform: 'uppercase';
+        };
+        italic: {
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: 'inherit';
+          fontWeight: 400;
+          italic: true;
+          label: 'Italic';
+          letterSpacing: '0em';
+          lineHeight: 'inherit';
+          textTransform: 'none';
+        };
+        link: {
+          color: '#f6543f';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '1rem';
+          fontWeight: 600;
+          label: 'Link';
+          letterSpacing: '0em';
+          lineHeight: '1.6';
+          textTransform: 'none';
+          underline: true;
+        };
+        list: {
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: '1.05rem';
+          fontWeight: 400;
+          label: 'List';
+          letterSpacing: '0em';
+          lineHeight: '1.8';
+          textTransform: 'none';
+        };
+        pullQuote: {
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-primary)';
+          fontSize: 'clamp(1.7rem, 2vw, 2.4rem)';
+          fontWeight: 500;
+          italic: true;
+          label: 'Pull Quote';
+          letterSpacing: '-0.03em';
+          lineHeight: '1.3';
+          textTransform: 'none';
+        };
+        subheading: {
+          bold: true;
+          color: '#f5f5f0';
+          fontFamily: 'var(--font-bebas)';
+          fontSize: 'clamp(1.6rem, 2.3vw, 2.9rem)';
+          fontWeight: 700;
+          label: 'Subheading';
+          letterSpacing: '0.06em';
+          lineHeight: '1.1';
+          textTransform: 'uppercase';
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNavigationItemNavigationItem
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'navigation_items';
+  info: {
+    description: 'Manage header and footer links. Use Placement and Order to choose where each link appears.';
+    displayName: 'Header & Footer Menus';
+    pluralName: 'navigation-items';
+    singularName: 'navigation-item';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    enabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    href: Schema.Attribute.String & Schema.Attribute.Required;
+    key: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::navigation-item.navigation-item'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    placement: Schema.Attribute.Enumeration<
+      ['header', 'footer-primary', 'footer-secondary']
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSiteCopySiteCopy extends Struct.CollectionTypeSchema {
+  collectionName: 'site_copies';
+  info: {
+    description: 'Edit homepage titles, descriptions, buttons, and shared text. Use Section to find copy for stories, topics, the footer, and other site areas.';
+    displayName: 'Homepage & Site Copy';
+    pluralName: 'site-copies';
+    singularName: 'site-copy';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String;
+    key: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::site-copy.site-copy'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    section: Schema.Attribute.Enumeration<
+      [
+        'global',
+        'home',
+        'story',
+        'topic',
+        'newsletter',
+        'footer',
+        'advertisement',
+      ]
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    value: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiStoryStory extends Struct.CollectionTypeSchema {
   collectionName: 'stories';
   info: {
-    description: 'World Crime Net editorial story';
-    displayName: 'Story';
+    description: 'Create and manage published investigations and documentary stories.';
+    displayName: 'Stories';
     pluralName: 'stories';
     singularName: 'story';
   };
@@ -480,8 +764,8 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
 export interface ApiTopicTopic extends Struct.CollectionTypeSchema {
   collectionName: 'topics';
   info: {
-    description: 'Editorial topic used to organize stories';
-    displayName: 'Topic';
+    description: 'Manage story categories and their topic landing pages.';
+    displayName: 'Topics';
     pluralName: 'topics';
     singularName: 'topic';
   };
@@ -866,6 +1150,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::design-system.design-system': ApiDesignSystemDesignSystem;
+      'api::navigation-item.navigation-item': ApiNavigationItemNavigationItem;
+      'api::site-copy.site-copy': ApiSiteCopySiteCopy;
       'api::story.story': ApiStoryStory;
       'api::topic.topic': ApiTopicTopic;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -4,8 +4,8 @@
   "info": {
     "singularName": "topic",
     "pluralName": "topics",
-    "displayName": "Topic",
-    "description": "Editorial topic used to organize stories"
+    "displayName": "Topics",
+    "description": "Manage story categories and their topic landing pages."
   },
   "options": {
     "draftAndPublish": false

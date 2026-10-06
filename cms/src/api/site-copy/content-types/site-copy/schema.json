@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "site_copies",
+  "info": {
+    "singularName": "site-copy",
+    "pluralName": "site-copies",
+    "displayName": "Homepage & Site Copy",
+    "description": "Edit homepage titles, descriptions, buttons, and shared text. Use Section to find copy for stories, topics, the footer, and other site areas."
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "key": { "type": "string", "required": true, "unique": true },
+    "section": {
+      "type": "enumeration",
+      "enum": ["global", "home", "story", "topic", "newsletter", "footer", "advertisement"],
+      "required": true
+    },
+    "value": { "type": "text", "required": true },
+    "description": { "type": "string" }
+  }
+}
