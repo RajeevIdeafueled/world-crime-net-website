@@ -18,3 +18,4 @@ cms/public/uploads/*
 *.sqlite3
 
 .DS_Store
+.vercel
